@@ -10,12 +10,11 @@
     {% block script %}{% endblock %}
 </head>
 <body>
-    <div id="header">
-        <div class="row">
-            <div class="col-8 logo-link dark-link">
-                <a href="{% url 'main' %}">AWS/Django Web Application</a>
-            </div>
-            <DIV CLASS="col-4 center member-link dark-link">
+    <DIV ID="header">
+		<DIV CLASS="logo" >
+			<DIV CLASS="row">
+				<DIV CLASS="col-8 logo-link dark-link"><A href="{% url 'main' %}">AWS / Django Web Application</A></DIV>
+				<DIV CLASS="col-4 center member-link dark-link">
 				{% if user.username %}
 				<A href="{% url 'password_change' %}">{{ user.last_name }} 님</A> /
 				<A href="{% url 'logout' %}">로그아웃</A>
@@ -29,10 +28,10 @@
 		<DIV CLASS="menu">
 			<DIV CLASS="row">
 				<DIV CLASS="col-2 center sideline dark-link"><A href="{% url 'main' %}">HOME</A></DIV>
-				<DIV CLASS="col-2 center sideline dark-link"><A href="{% url 'introduce' %}">소개</A></DIV>
-				<DIV CLASS="col-2 center sideline dark-link"><A href="{% url 'boardlist' 'notice' %}">공지사항</A></DIV>
-				<DIV CLASS="col-2 center sideline dark-link"><A href="{% url 'boardlist' 'free' %}">자유 게시판</A></DIV>
-				<DIV CLASS="col-2 center sideline dark-link"><A href="{% url 'commlist' 'comm' %}">대화형 게시판</A></DIV>
+				<DIV CLASS="col-2 center sideline dark-link"><A href="/">소개</A></DIV>
+				<DIV CLASS="col-2 center sideline dark-link"><A href="/">공지사항</A></DIV>
+				<DIV CLASS="col-2 center sideline dark-link"><A href="/">자유 게시판</A></DIV>
+				<DIV CLASS="col-2 center sideline dark-link"><A href="/">대화형 게시판</A></DIV>
 				<DIV CLASS="col-2 center sideline">&nbsp;</DIV>
 			</DIV>
 		</DIV>
