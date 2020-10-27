@@ -1,6 +1,18 @@
 import React from "react";
 import "./App.css";
 
+const useSemiPersistenceState = (key, initialState) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) || initialState
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+
+  return [value, setValue];
+};
+
 const App = () => {
   const stories = [
     {
@@ -21,7 +33,10 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState("React");
+  const [searchTerm, setSearchTerm] = useSemiPersistenceState(
+    "search",
+    "React"
+  );
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -35,7 +50,15 @@ const App = () => {
     <div>
       <h1>My Hacker Stories</h1>
 
-      <Search search={searchTerm} onSearch={handleSearch} />
+      <InputWithLabel
+        id="search"
+        label="Search"
+        value={searchTerm}
+        isFocused
+        onInputChange={handleSearch}
+      >
+        <strong>Search:</strong>
+      </InputWithLabel>
 
       <hr />
       <List list={searchedStories} />
@@ -43,12 +66,37 @@ const App = () => {
   );
 };
 
-const Search = ({ search, onSearch }) => (
-  <div>
-    <label htmlFor="search">Search: </label>
-    <input id="search" type="text" value={search} onChange={onSearch} />
-  </div>
-);
+const InputWithLabel = ({
+  id,
+  value,
+  type = "text",
+  onInputChange,
+  isFocused,
+  children,
+}) => {
+  const inputRef = React.useRef();
+
+  React.useEffect(() => {
+    if (isFocused && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isFocused]);
+
+  return (
+    <>
+      <label htmlFor="{id}">{children} </label>&nbsp;
+      {}
+      <input
+        ref={inputRef}
+        id={id}
+        type={type}
+        value={value}
+        autoFocus={isFocused}
+        onChange={onInputChange}
+      />
+    </>
+  );
+};
 
 const List = ({ list }) =>
   list.map((item) => <Item key={item.objectID} item={item} />);
